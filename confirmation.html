@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System - Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lavenderblush;
+            color: #333;
+            padding: 20px;
+            background-image: url('https://i.pinimg.com/564x/2b/78/b1/2b78b130a864ca0a40e9665ccb509e10.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(245, 255, 250, 0.95); /* mintcream with transparency */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #8a2be2; /* blueviolet for better contrast */
+            margin-bottom: 20px;
+        }
+        .details {
+            text-align: left;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .details h3 {
+            margin-bottom: 10px;
+            color: #8a2be2; /* blueviolet */
+        }
+        .details p {
+            margin: 5px 0;
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .navigation a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #d8bfd8; /* thistle */
+            color: #333;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .navigation a:hover {
+            background-color: #c71585; /* mediumvioletred for hover effect */
+            color: #fff; /* White text for better contrast */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Booking Confirmation</h2>
+        <p>Thank you for your booking! We have received your details and will be in touch shortly.</p>
+        <div class="details" id="booking-details">
+            <h3>Booking Details:</h3>
+        </div>
+        <div class="navigation">
+            <a href="ok.html">OK</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookingDetails = JSON.parse(localStorage.getItem('bookingDetails'));
+            const grandTotal = localStorage.getItem('grandTotal');
+
+            if (bookingDetails && grandTotal) {
+                const detailsContainer = document.getElementById('booking-details');
+
+                for (const [key, value] of Object.entries(bookingDetails)) {
+                    const detailElement = document.createElement('p');
+                    detailElement.innerHTML = `<strong>${key.replace(/_/g, ' ').toUpperCase()}:</strong> ${value}`;
+                    detailsContainer.appendChild(detailElement);
+                }
+
+                const totalElement = document.createElement('p');
+                totalElement.innerHTML = `<strong>GRAND TOTAL:</strong> $${grandTotal}`;
+                detailsContainer.appendChild(totalElement);
+            }
+        });
+    </script>
+</body>
+</html>

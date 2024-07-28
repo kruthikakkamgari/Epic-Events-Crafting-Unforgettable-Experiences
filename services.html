@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System - Services</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            font-size:20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .service-container {
+            position: relative;
+            width: 100%; /* Adjust width for grid columns */
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .service {
+            width: 100%; /* Ensure the image takes full width of its container */
+            height: auto;
+            display: block;
+        }
+
+        .service img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover; /* Ensures the image covers the entire box without stretching */
+        }
+
+        .service-checkbox {
+            position: absolute;
+            top: 10px; /* Adjust top position of checkbox */
+            right: 10px; /* Adjust right position of checkbox */
+        }
+
+        .service-checkbox input {
+            position: absolute;
+            opacity: 0; /* Hide the actual checkbox */
+            cursor: pointer;
+        }
+
+        .service-checkbox label {
+            position: relative;
+            display: block;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .service-checkbox label:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .service-checkbox label::before {
+            content: '\2714'; /* Checkmark symbol */
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            color: #333;
+            background-color: white;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+
+        .service-checkbox input:checked + label::before {
+            content: '\2713'; /* Checked checkmark symbol */
+            color: white;
+            background-color: #218838;
+        }
+
+        .service-checkbox input:checked + label {
+            background-color: #28a745;
+        }
+
+        .service-label {
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .navigation {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navigation a:hover {
+            background-color: #218838;
+        }
+
+        .bill {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .bill-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .bill-total {
+            font-weight: bold;
+        }
+        
+        @media (max-width: 900px) {
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="services">
+        <h2>Services</h2>
+        <form>
+            <h3>Select Services:</h3>
+            <div class="service-grid">
+                <div class="service">
+                    <input type="checkbox" id="decoration" name="service" value="200" onchange="toggleDecorationMenu()">
+                    <img src="https://media.weddingz.in/images/20200416112037/dreamz_5-800x800.jpg" alt="Decoration">
+                    <label for="decoration">Decoration - $200</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="catering" name="service" value="300" onchange="toggleCateringMenu()">
+                    <img src="https://lirp.cdn-website.com/f80d02d5/dms3rep/multi/opt/BMC09078-1920w.jpg" alt="Catering">
+                    <label for="catering">Catering - $300</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="dj" name="service" value="150">
+                    <img src="https://wallpaperaccess.com/full/5429549.jpg" alt="DJ">
+                    <label for="dj">DJ - $150</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="band" name="service" value="400">
+                    <img src="https://www.thoughtco.com/thmb/uzoFV2DqEPPbReownHgLto7e-Cw=/3053x1993/filters:no_upscale():max_bytes(150000):strip_icc()/thepolice-bandphoto-58aca2565f9b58a3c94daf2d.jpg" alt="Band">
+                    <label for="band">Band - $400</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="mehandi" name="service" value="100">
+                    <img src="https://i.pinimg.com/originals/51/41/f0/5141f079aab4362a8ea7f8d2fc9ea8ce.jpg" alt="Mehandi Artist">
+                    <label for="mehandi">Mehandi Artist - $100</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="florist" name="service" value="250">
+                    <img src="https://eadn-wc03-103717.nxedge.io/cdn/wp-content/uploads/2020/01/what-does-florist-do-1024x682.jpg" alt="Florist">
+                    <label for="florist">Florist - $250</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="photographer" name="service" value="200">
+                    <img src="https://assets.entrepreneur.com/content/3x2/2000/20191009140007-GettyImages-1053962188.jpeg" alt="Photographer">
+                    <label for="photographer">Photographer - $200</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="transportation" name="service" value="150">
+                    <img src="https://tse3.mm.bing.net/th?id=OIP.3Mejw2AWXm2bSATelC8N9gHaE7&pid=Api&P=0&h=220" alt="Transportation">
+                    <label for="transportation">Transportation - $150</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="security" name="service" value="300">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.mrsrtpfuxN9MdO1-TlENbQHaE8&pid=Api&P=0&h=220" alt="Security">
+                    <label for="security">Security - $300</label>
+                </div>
+                <div class="service">
+                    <input type="checkbox" id="fireworks" name="service" value="500">
+                    <img src="https://bloximages.newyork1.vip.townnews.com/gazette.com/content/tncms/assets/v3/editorial/d/8b/d8bea26c-7b21-11e8-961e-c7b1e9f2e617/5b355fe89c68f.image.jpg?resize=1200%2C800" alt="Fireworks">
+                    <label for="fireworks">Fireworks - $500</label>
+                </div>
+            </div>
+
+            <div id="decoration-menu" style="display: none;">
+                <h3>Decoration Types:</h3>
+                <select id="decoration-type" onchange="showDecorationItems()">
+                    <option value="">Select Decoration Type</option>
+                    <option value="floral">Floral</option>
+                    <option value="balloons">Balloons</option>
+                    <option value="lights">Lights</option>
+                </select>
+
+                <div id="decoration-items" style="display: none;">
+                    <div id="floral-items" style="display: none;">
+                        <h4>Floral Decoration:</h4>
+                        <div class="item">
+                            <input type="checkbox" id="roses" name="decoration-item" value="100">
+                            <label for="roses">Roses - $100</label>
+                        </div>
+                        <div class="item">
+                            <input type="checkbox" id="lilies" name="decoration-item" value="120">
+                            <label for="lilies">Lilies - $120</label>
+                        </div>
+                        <div class="item">
+                            <input type="checkbox" id="orchids" name="decoration-item" value="150">
+                            <label for="orchids">Orchids - $150</label>
+                        </div>
+                    </div>
+
+                    <div id="balloons-items" style="display: none;">
+                        <h4>Balloons Decoration:</h4>
+                        <div class="item">
+                            <input type="checkbox" id="balloon-arches" name="decoration-item" value="80">
+                            <label for="balloon-arches">Balloon Arches - $80</label>
+                        </div>
+                        <div class="item">
+                            <input type="checkbox" id="balloon-columns" name="decoration-item" value="90">
+                            <label for="balloon-columns">Balloon Columns - $90</label>
+                        </div>
+                        <div class="item">
+                            <input type="checkbox" id="balloon-bouquets" name="decoration-item" value="70">
+                            <label for="balloon-bouquets">Balloon Bouquets - $70</label>
+                        </div>
+                    </div>
+
+                    <div id="lights-items" style="display: none;">
+                        <h4>Lights Decoration:</h4>
+                        <div class="item">
+                            <input type="checkbox" id="fairy-lights" name="decoration-item" value="50">
+                            <label for="fairy-lights">Fairy Lights - $50</label>
+                        </div>
+                        <div class="item">
+                            <input type="checkbox" id="led-strips" name="decoration-item" value="60">
+                            <label for="led-strips">LED Strips - $60</label>
+                        </div>
+                        <div class="item">
+                            <input type="checkbox" id="chandeliers" name="decoration-item" value="200">
+                            <label for="chandeliers">Chandeliers - $200</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="catering-menu" style="display:none;">
+                <h3>Catering Menu:</h3>
+                <select id="cuisine" onchange="showCuisineItems()">
+                    <option value="">Select Cuisine</option>
+                    <option value="indian">Indian</option>
+                    <option value="italian">Italian</option>
+                    <option value="mexican">Mexican</option>
+                </select>
+
+                <div id="cuisine-items" style="display: none;">
+                    <label for="plates">Number of Plates:</label>
+                    <input type="number" id="plates" name="plates" min="1" placeholder="Enter number of plates">
+
+                    <!-- Indian Items -->
+<div id="indian-items" class="cuisine-items">
+    <h3>Indian Cuisine</h3>
+    <div class="item">
+        <input type="checkbox" id="biryani" name="item" value="20">
+        <label for="biryani">Biryani - $20 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="chicken-masala" name="item" value="18">
+        <label for="chicken-masala">Chicken Masala - $18 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="palak-paneer" name="item" value="15">
+        <label for="palak-paneer">Palak Paneer - $15 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="paneer-tikka" name="item" value="16">
+        <label for="paneer-tikka">Paneer Tikka - $16 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="naan" name="item" value="5">
+        <label for="naan">Naan - $5 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="samosa" name="item" value="4">
+        <label for="samosa">Samosa - $4 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="tandoori-chicken" name="item" value="22">
+        <label for="tandoori-chicken">Tandoori Chicken - $22 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="chicken-tikka" name="item" value="17">
+        <label for="chicken-tikka">Chicken Tikka - $17 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="chana-masala" name="item" value="13">
+        <label for="chana-masala">Chana Masala - $13 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="dal-makhani" name="item" value="14">
+        <label for="dal-makhani">Dal Makhani - $14 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="butter-chicken" name="item" value="24">
+        <label for="butter-chicken">Butter Chicken - $24 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="aloo-gobi" name="item" value="12">
+        <label for="aloo-gobi">Aloo Gobi - $12 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="bhindi-masala" name="item" value="14">
+        <label for="bhindi-masala">Bhindi Masala - $14 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="mutter-paneer" name="item" value="16">
+        <label for="mutter-paneer">Mutter Paneer - $16 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="chicken-korma" name="item" value="20">
+        <label for="chicken-korma">Chicken Korma - $20 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="vegetable-biryani" name="item" value="18">
+        <label for="vegetable-biryani">Vegetable Biryani - $18 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="rogan-josh" name="item" value="22">
+        <label for="rogan-josh">Rogan Josh - $22 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="chicken-curry" name="item" value="19">
+        <label for="chicken-curry">Chicken Curry - $19 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="dal-tadka" name="item" value="10">
+        <label for="dal-tadka">Dal Tadka - $10 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="roti" name="item" value="3">
+        <label for="roti">Roti - $3 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="papad" name="item" value="2">
+        <label for="papad">Papad - $2 per plate</label>
+    </div>
+    <!-- Add more Indian items here -->
+</div>
+
+<!-- Italian Items -->
+<div id="italian-items" class="cuisine-items">
+    <h3>Italian Cuisine</h3>
+    <div class="item">
+        <input type="checkbox" id="pizza" name="item" value="18">
+        <label for="pizza">Pizza - $18 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="lasagna" name="item" value="20">
+        <label for="lasagna">Lasagna - $20 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="risotto" name="item" value="22">
+        <label for="risotto">Risotto - $22 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="bruschetta" name="item" value="12">
+        <label for="bruschetta">Bruschetta - $12 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="tiramisu" name="item" value="14">
+        <label for="tiramisu">Tiramisu - $14 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="caprese-salad" name="item" value="15">
+        <label for="caprese-salad">Caprese Salad - $15 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="gnocchi" name="item" value="17">
+        <label for="gnocchi">Gnocchi - $17 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="carbonara" name="item" value="19">
+        <label for="carbonara">Carbonara - $19 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="minestrone-soup" name="item" value="13">
+        <label for="minestrone-soup">Minestrone Soup - $13 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="calzone" name="item" value="16">
+        <label for="calzone">Calzone - $16 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="cannoli" name="item" value="11">
+        <label for="cannoli">Cannoli - $11 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="focaccia-bread" name="item" value="10">
+        <label for="focaccia-bread">Focaccia Bread - $10 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="panna-cotta" name="item" value="16">
+        <label for="panna-cotta">Panna Cotta - $16 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="carpaccio" name="item" value="18">
+        <label for="carpaccio">Carpaccio - $18 per plate</label>
+    </div>
+    <!-- Add more Italian items here -->
+</div>
+
+                  <!-- Mexican Items -->
+<div id="mexican-items" class="cuisine-items">
+    <h3>Mexican Cuisine</h3>
+    <div class="item">
+        <input type="checkbox" id="taco" name="item" value="12">
+        <label for="taco">Taco - $12 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="burrito" name="item" value="15">
+        <label for="burrito">Burrito - $15 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="enchiladas" name="item" value="14">
+        <label for="enchiladas">Enchiladas - $14 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="quesadilla" name="item" value="10">
+        <label for="quesadilla">Quesadilla - $10 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="nachos" name="item" value="11">
+        <label for="nachos">Nachos - $11 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="fajitas" name="item" value="18">
+        <label for="fajitas">Fajitas - $18 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="guacamole" name="item" value="8">
+        <label for="guacamole">Guacamole - $8 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="tamales" name="item" value="16">
+        <label for="tamales">Tamales - $16 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="chiles-rellenos" name="item" value="17">
+        <label for="chiles-rellenos">Chiles Rellenos - $17 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="chimichanga" name="item" value="20">
+        <label for="chimichanga">Chimichanga - $20 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="mole" name="item" value="22">
+        <label for="mole">Mole - $22 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="carne-asada" name="item" value="25">
+        <label for="carne-asada">Carne Asada - $25 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="pollo-asado" name="item" value="23">
+        <label for="pollo-asado">Pollo Asado - $23 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="tortilla-soup" name="item" value="10">
+        <label for="tortilla-soup">Tortilla Soup - $10 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="flautas" name="item" value="13">
+        <label for="flautas">Flautas - $13 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="salsa-verde" name="item" value="7">
+        <label for="salsa-verde">Salsa Verde - $7 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="pico-de-gallo" name="item" value="5">
+        <label for="pico-de-gallo">Pico de Gallo - $5 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="churros" name="item" value="9">
+        <label for="churros">Churros - $9 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="elote" name="item" value="6">
+        <label for="elote">Elote - $6 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="horchata" name="item" value="4">
+        <label for="horchata">Horchata - $4 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="tostadas" name="item" value="11">
+        <label for="tostadas">Tostadas - $11 per plate</label>
+    </div>
+    <div class="item">
+        <input type="checkbox" id="sopes" name="item" value="14">
+        <label for="sopes">Sopes - $14 per plate</label>
+    </div>
+    <!-- Add more Mexican items here -->
+</div>
+
+                </div>
+            </div>
+
+            <button type="button" onclick="calculateCost()">Calculate Cost</button>
+        </form>
+        <div class="navigation">
+            <a href="events.html" id="back-page-btn">Back </a>
+            <a href="booking.html" id="next-page-btn">Next </a>
+        </div>
+        <div id="bill" class="bill" style="display: none;">
+            <h3>Bill Summary:</h3>
+            <div id="bill-items"></div>
+            <div class="bill-total" id="total-cost"></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCateringMenu() {
+            var cateringCheckbox = document.getElementById("catering");
+            var cateringMenu = document.getElementById("catering-menu");
+            cateringMenu.style.display = cateringCheckbox.checked ? "block" : "none";
+        }
+
+        function toggleDecorationMenu() {
+            var decorationCheckbox = document.getElementById("decoration");
+            var decorationMenu = document.getElementById("decoration-menu");
+            decorationMenu.style.display = decorationCheckbox.checked ? "block" : "none";
+        }
+
+        function showCuisineItems() {
+            var cuisine = document.getElementById("cuisine").value;
+            var cuisineItems = document.getElementById("cuisine-items");
+            var indianItems = document.getElementById("indian-items");
+            var italianItems = document.getElementById("italian-items");
+            var mexicanItems = document.getElementById("mexican-items");
+
+            cuisineItems.style.display = cuisine ? "block" : "none";
+            indianItems.style.display = cuisine === "indian" ? "block" : "none";
+            italianItems.style.display = cuisine === "italian" ? "block" : "none";
+            mexicanItems.style.display = cuisine === "mexican" ? "block" : "none";
+        }
+
+        function showDecorationItems() {
+            var decorationType = document.getElementById("decoration-type").value;
+            var decorationItems = document.getElementById("decoration-items");
+            var floralItems = document.getElementById("floral-items");
+            var balloonsItems = document.getElementById("balloons-items");
+            var lightsItems = document.getElementById("lights-items");
+
+            decorationItems.style.display = decorationType ? "block" : "none";
+            floralItems.style.display = decorationType === "floral" ? "block" : "none";
+            balloonsItems.style.display = decorationType === "balloons" ? "block" : "none";
+            lightsItems.style.display = decorationType === "lights" ? "block" : "none";
+        }
+
+        function calculateCost() {
+    var services = document.querySelectorAll('input[name="service"]:checked');
+    var items = document.querySelectorAll('input[name="item"]:checked');
+    var decorationTypes = document.querySelectorAll('input[name="decoration-item"]:checked');
+    var plates = document.getElementById("plates").value;
+    var billItems = document.getElementById("bill-items");
+    var totalCost = document.getElementById("total-cost");
+    var bill = document.getElementById("bill");
+
+    var total = 0;
+    billItems.innerHTML = "";
+
+    // Calculate the cost of selected services
+    services.forEach(function(service) {
+        var serviceLabel = document.querySelector('label[for="' + service.id + '"]').textContent;
+        var serviceCost = parseFloat(service.value);
+        total += serviceCost;
+        billItems.innerHTML += "<div class='bill-item'><span>" + serviceLabel + "</span><span>$" + serviceCost.toFixed(2) + "</span></div>";
+    });
+
+    // Calculate the cost of selected items
+    if (plates) {
+        items.forEach(function(item) {
+            var itemLabel = document.querySelector('label[for="' + item.id + '"]').textContent;
+            var itemCost = parseFloat(item.value) * parseInt(plates);
+            total += itemCost;
+            billItems.innerHTML += "<div class='bill-item'><span>" + itemLabel + " x " + plates + "</span><span>$" + itemCost.toFixed(2) + "</span></div>";
+        });
+    }
+
+    // Calculate the cost of selected decoration types
+    decorationTypes.forEach(function(decorationType) {
+        var decorationTypeLabel = document.querySelector('label[for="' + decorationType.id + '"]').textContent;
+        var decorationTypeCost = parseFloat(decorationType.value);
+        total += decorationTypeCost;
+        billItems.innerHTML += "<div class='bill-item'><span>" + decorationTypeLabel + "</span><span>$" + decorationTypeCost.toFixed(2) + "</span></div>";
+    });
+
+    totalCost.textContent = "Total Cost: $" + total.toFixed(2);
+    bill.style.display = "block";
+}
+document.addEventListener('DOMContentLoaded', function() {
+            var eventImageUrl = localStorage.getItem('eventImageUrl');
+            if (eventImageUrl) {
+                document.body.style.backgroundImage = 'url(' + eventImageUrl + ')';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System - Home</title>
+    <style>
+        body {
+            background-color: mintcream;
+            background-image: url('https://i.pinimg.com/564x/d5/d8/c4/d5d8c4fdd100cd0f6fce30e18bf1a4d5.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .column {
+            flex-basis: 48%;
+            background-color: rgba(255, 240, 245, 0.9); /* Adjusted for transparency */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .column:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .navigation {
+            margin-top: 20px;
+        }
+
+        .navigation a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navigation a:hover {
+            background-color: #45a049;
+        }
+
+        img.hall-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .column h3 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .column p {
+            color: #666;
+            text-align: center;
+        }
+
+        #grandTotal {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5em;
+            background-color: lavenderblush;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="functionHalls">
+        <h2>Function Halls</h2>
+        <div class="row">
+            <div class="column">
+                <h3>Crystal Ballroom</h3>
+                <img src="https://media.weddingz.in/images/38079f4c34eebbbc5af0ecb741bdb85d/maharaja-function-hall-maharaja-function-hall.jpg" alt="Crystal Ballroom" class="hall-image">
+                <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p>Price: $1000</p>
+                <button onclick="selectHall(1000, 'Crystal Ballroom')">Select Hall</button>
+            </div>
+            <div class="column">
+                <h3>Golden Pavilion</h3>
+                <img src="https://www.oyorooms.com/blog/wp-content/uploads/2018/03/fe-34.jpg" alt="Golden Pavilion" class="hall-image">
+                <p>Description: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Price: $1500</p>
+                <button onclick="selectHall(1500, 'Golden Pavilion')">Select Hall</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <h3>Royal Gardens</h3>
+                <img src="https://media.weddingz.in/images/73b97a7c3d017821ca0fb0aa918069d6/lake-view-banjara-function-hall-banjara-hills-hyderabad.jpg" alt="Royal Gardens" class="hall-image">
+                <p>Description: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Price: $1200</p>
+                <button onclick="selectHall(1200, 'Royal Gardens')">Select Hall</button>
+            </div>
+            <div class="column">
+                <h3>Sapphire Hall</h3>
+                <img src="https://www.srmt.com/public/images/admin/63321.jpg" alt="Sapphire Hall" class="hall-image">
+                <p>Description: Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Price: $1800</p>
+                <button onclick="selectHall(1800, 'Sapphire Hall')">Select Hall</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <h3>Emerald Room</h3>
+                <img src="https://images.venuebookingz.com/21133-1593747226-wm-royal-functional-hall-banni-mantap-mysore-1.jpg" alt="Emerald Room" class="hall-image">
+                <p>Description: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Price: $2000</p>
+                <button onclick="selectHall(2000, 'Emerald Room')">Select Hall</button>
+            </div>
+            <div class="column">
+                <h3>Diamond Hall</h3>
+                <img src="https://image.wedmegood.com/resized/800X/uploads/member/765526/1570530319_19990074_1082834665082116_3981552756416822470_n.jpg" alt="Diamond Hall" class="hall-image">
+                <p>Description: Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Price: $1600</p>
+                <button onclick="selectHall(1600, 'Diamond Hall')">Select Hall</button>
+            </div>
+        </div>
+        <div class="navigation">
+            <a href="index.html" style="background-color: #4CAF50;">Back</a>
+            <a href="events.html" style="background-color: #4CAF50;">Next</a>
+        </div>
+    </div>
+   
+    <script>
+        function selectHall(price, hallName) {
+            localStorage.setItem('hallPrice', price);
+            localStorage.setItem('hallName', hallName);  // Store the selected hall name
+            updateGrandTotal();
+            window.location.href = 'events.html';  // Redirect to events.html after selecting the hall
+        }
+
+        function updateGrandTotal() {
+            const hallPrice = parseFloat(localStorage.getItem('hallPrice')) || 0;
+            const eventPrice = parseFloat(localStorage.getItem('eventPrice')) || 0;
+            const servicesPrice = parseFloat(localStorage.getItem('servicesPrice')) || 0;
+            const grandTotal = hallPrice + eventPrice + servicesPrice;
+            localStorage.setItem('grandTotal', grandTotal);
+        }
+
+        document.addEventListener('DOMContentLoaded', updateGrandTotal);
+    </script>
+</body>
+</html>

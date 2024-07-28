@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System - Events</title>
+    <style>
+        /* Main container styling with background image */
+        #events {
+            padding: 20px;
+            background: url('https://i.pinimg.com/564x/04/e7/7f/04e77f444a2a9313fe7a79fc062e5754.jpg') no-repeat center center;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Grid layout for event items */
+        #events ul {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Styling for each event item */
+        #events li {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #events li:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Uniform image size for all event images */
+        #events img {
+            width: 100%;
+            max-width: 250px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Styling for event titles */
+        #events h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Styling for event descriptions and prices */
+        #events p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Styling for "Select Event" buttons */
+        #events button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #events button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Navigation container styling */
+        .navigation {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Styling for navigation buttons */
+        .navigation a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navigation a:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            #events ul {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            #events ul {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="events">
+        <h2 style="text-align:center; color:#333; font-size:2em; margin-bottom:20px;">Events</h2>
+        <ul>
+            <li>
+                <h3>Birthday</h3>
+                <img src="https://i.pinimg.com/originals/aa/0c/11/aa0c11285c85cb97d80a14e85e227ead.jpg" alt="Birthday">
+                <p>Price: $500</p>
+                <button onclick="selectEvent('birthday', 500, 'https://png.pngtree.com/thumb_back/fw800/background/20201011/pngtree-gradient-pink-birthday-balloon-small-flag-party-background-image_408057.jpg')">Select Event</button>
+            </li>
+            <li>
+                <h3>Marriage</h3>
+                <img src="http://drvidyahattangadi.com/wp-content/uploads/2018/11/wedding2.jpg" alt="Marriage">
+                <p>Price: $2000</p>
+                <button onclick="selectEvent('marriage', 2000, 'https://i.pinimg.com/564x/34/ae/3c/34ae3c8c5dfe88697e47a0b84145467f.jpg')">Select Event</button>
+            </li>
+            <li>
+                <h3>Engagement</h3>
+                <img src="https://cdn.sharechat.com/1166df8f_1634743693183_sc.jpeg" alt="Engagement">
+                <p>Price: $800</p>
+                <button onclick="selectEvent('engagement', 800, 'https://i.pinimg.com/564x/52/c4/0f/52c40fa337ec6a6b10f51bee9e5915e9.jpg')">Select Event</button>
+            </li>
+            <li>
+                <h3>Reception</h3>
+                <img src="https://i.pinimg.com/originals/60/3d/7f/603d7fdf8d4b20d62acbe67ce44d9ef4.jpg" alt="Reception">
+                <p>Price: $1500</p>
+                <button onclick="selectEvent('reception', 1500, 'https://i.pinimg.com/564x/2c/b8/7d/2cb87d6ffd9d709e70813a07c73e9a5e.jpg')">Select Event</button>
+            </li>
+            <li>
+                <h3>Pool Party</h3>
+                <img src="https://wp-media-partyslate.imgix.net/2021/04/photo-3cf76891-0fe0-4759-97fa-aa477b076104.jpeg?auto=compress%2Cformat&fit=scale&h=840&ixlib=php-1.2.1&w=1260&wpsize=medium" alt="Pool Party">
+                <p>Price: $1000</p>
+                <button onclick="selectEvent('pool_party', 1000, 'https://i.pinimg.com/564x/5d/79/e5/5d79e53affd77a41f3173acc74cc3c3f.jpg')">Select Event</button>
+            </li>
+            <li>
+                <h3>Conference</h3>
+                <img src="https://th.bing.com/th/id/OIP.Jz10N_W1SOv6hpHJMlJUtQAAAA?rs=1&pid=ImgDetMain" alt="Conference">
+                <p>Price: $500</p>
+                <button onclick="selectEvent('conference', 500, 'https://wallpaperaccess.com/full/1393321.png')">Select Event</button>
+            </li>
+        </ul>
+        <div class="navigation">
+            <a href="home.html">Back</a>
+            <a href="services.html">Next</a>
+        </div>
+    </div>
+    <script>
+        function selectEvent(eventType, price, imageUrl) {
+            localStorage.setItem('eventType', eventType);
+            localStorage.setItem('eventPrice', price);
+            localStorage.setItem('eventImageUrl', imageUrl);
+            updateGrandTotal();
+            window.location.href = 'services.html'; // Redirect to services.html
+        }
+
+        function updateGrandTotal() {
+            const hallPrice = parseFloat(localStorage.getItem('hallPrice')) || 0;
+            const eventPrice = parseFloat(localStorage.getItem('eventPrice')) || 0;
+            const servicesPrice = parseFloat(localStorage.getItem('servicesPrice')) || 0;
+            const grandTotal = hallPrice + eventPrice + servicesPrice;
+            localStorage.setItem('grandTotal', grandTotal);
+        }
+
+        document.addEventListener('DOMContentLoaded', updateGrandTotal);
+    </script>
+</body>
+</html>

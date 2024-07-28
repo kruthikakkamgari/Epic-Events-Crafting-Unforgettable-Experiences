@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management System - Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FAF0F6; /* Lavender Blush */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .calendar-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: rgba(240, 255, 240, 0.95); /* Transparent Mint Cream */
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Ensure overflow is hidden for rounded corners */
+            padding: 20px;
+        }
+
+        .calendar-header {
+            background-color: #D8BFD8; /* Thistle */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calendar-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .calendar-header button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar th,
+        .calendar td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .calendar th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .calendar td.available {
+            background-color: #c1e2b3; /* Light green for available days */
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+
+        .calendar td.available:hover {
+            background-color: #a1d68f;
+        }
+
+        .calendar td.booked {
+            background-color: #f08d8d; /* Light red for booked days */
+            cursor: not-allowed;
+            position: relative;
+        }
+
+        .calendar td.past {
+            background-color: #e6e6e6; /* Light gray for past dates */
+            cursor: not-allowed;
+            position: relative;
+            color: #999;
+        }
+
+        .calendar td.selected {
+            background-color: #a1d68f; /* Darker green for selected days */
+        }
+
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .navigation a {
+            color: #fff;
+            background-color: #D8BFD8; /* Thistle */
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .navigation a:hover {
+            background-color: #c8a2c8; /* Darker Thistle */
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .legend div {
+            display: flex;
+            align-items: center;
+            margin: 0 30px;
+        }
+
+        .legend span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .legend .available-color {
+            background-color: #c1e2b3;
+        }
+
+        .legend .booked-color {
+            background-color: #f08d8d;
+        }
+
+        .legend .past-color {
+            background-color: #e6e6e6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calendar-container">
+    <div class="calendar-header">
+        <button onclick="prevMonth()">Previous</button>
+        <span id="monthYear"></span>
+        <button onclick="nextMonth()">Next</button>
+    </div>
+    <table class="calendar">
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody id="calendarBody">
+            <!-- Calendar days will be generated here dynamically -->
+        </tbody>
+    </table>
+</div>
+
+<div class="legend">
+    <div>
+        <span class="available-color"></span>
+        <span>Available</span>
+    </div>
+    <div>
+        <span class="booked-color"></span>
+        <span>Booked</span>
+    </div>
+    <div>
+        <span class="past-color"></span>
+        <span>Past</span>
+    </div>
+</div>
+
+<div class="navigation">
+    <a href="index.html">Back</a>
+</div>
+
+<script>
+    const calendarBody = document.getElementById('calendarBody');
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+
+    function buildCalendar(month, year) {
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const firstDayOfMonth = new Date(year, month, 1).getDay();
+        const bookedDates = JSON.parse(localStorage.getItem('bookedDates')) || [];
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Normalize today's date
+
+        document.getElementById('monthYear').textContent = `${getMonthName(month)} ${year}`;
+
+        let html = '<tr>';
+
+        for (let i = 0; i < firstDayOfMonth; i++) {
+            html += '<td></td>';
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month, day);
+            const formattedDate = date.toISOString().slice(0, 10);
+            const isBooked = bookedDates.includes(formattedDate);
+            const isPast = date < today;
+
+            if (isPast) {
+                html += `<td class="past" onclick="showMessage('This date has expired and is no longer valid!')">${day}</td>`;
+            } else if (isBooked) {
+                html += `<td class="booked" onclick="showMessage('Slot already filled!')">${day}</td>`;
+            } else {
+                html += `<td class="available" onclick="selectDate(${day})">${day}</td>`;
+            }
+
+            if ((day + firstDayOfMonth) % 7 === 0) {
+                html += '</tr><tr>';
+            }
+        }
+
+        calendarBody.innerHTML = html;
+    }
+
+    function prevMonth() {
+        currentMonth -= 1;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear -= 1;
+        }
+        buildCalendar(currentMonth, currentYear);
+    }
+
+    function nextMonth() {
+        currentMonth += 1;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear += 1;
+        }
+        buildCalendar(currentMonth, currentYear);
+    }
+
+    function selectDate(day) {
+        const selectedDate = new Date(currentYear, currentMonth, day+1);
+        const formattedDate = selectedDate.toISOString().slice(0, 10);
+
+        // Retrieve booked dates from localStorage
+        let bookedDates = JSON.parse(localStorage.getItem('bookedDates')) || [];
+
+        // Add the selected date to the booked dates
+        bookedDates.push(formattedDate);
+
+        // Save the updated booked dates to localStorage
+        localStorage.setItem('bookedDates', JSON.stringify(bookedDates));
+
+        // Store the selected date in localStorage
+        localStorage.setItem('eventDate', formattedDate);
+
+        window.location.href = 'home.html';
+    }
+
+    function showMessage(message) {
+        alert(message);
+    }
+
+    function getMonthName(month) {
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[month];
+    }
+
+    buildCalendar(currentMonth, currentYear);
+</script>
+
+</body>
+</html>

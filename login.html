@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Epic Events</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+}
+            #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%; /* Ensure full width */
+            height: 100%; /* Ensure full height */
+            object-fit: cover; /* Cover entire viewport */
+            z-index: -1;
+        
+        }
+
+        header, footer {
+            background-color: #000;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+        }
+
+        #content {
+            padding: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-form {
+            background-color: #fff; /* White background */
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
+            position: relative; /* Position for the pseudo-element */
+        }
+
+        .login-form h1 {
+            color: #333; /* Dark text color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow effect */
+            margin-bottom: 20px; /* Add some space below the heading */
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9; /* Light gray background */
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); /* Inner shadow effect */
+        }
+
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 1px; /* Letter spacing */
+            transition: background-color 0.3s; /* Smooth color transition */
+        }
+
+        .login-form input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .login-form input[type="submit"]:focus {
+            outline: none; /* Remove the default focus outline */
+        }
+
+        .login-form input[type="text"]:focus,
+        .login-form input[type="password"]:focus {
+            border-color: #555; /* Change border color on focus */
+        }
+
+        .login-form::before {
+            content: "";
+            position: absolute;
+            top: -10px; /* Adjust the position to cover the form's border */
+            left: -10px; /* Adjust the position to cover the form's border */
+            width: calc(100% + 20px); /* Extend the width to cover the form's border */
+            height: calc(100% + 20px); /* Extend the height to cover the form's border */
+            background: linear-gradient(45deg, #f9f9f9, #ccc);
+            opacity: 0.5; /* Transparency */
+            z-index: -1; /* Behind the form */
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<video autoplay muted loop id="bg-video">
+        <source src="rain.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="content">
+        <div class="login-form">
+            <h1>Login to Epic Events</h1>
+            <form action="index.html" method="GET">
+                <input type="text" name="username" placeholder="Username" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
