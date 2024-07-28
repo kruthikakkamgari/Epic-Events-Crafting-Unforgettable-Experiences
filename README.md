@@ -2,7 +2,7 @@
 This repository contains the source code for the "Epic Events: Crafting Unforgettable Experiences" website. The website includes navigation links for Home, About Us, Calendar, and Contact Us, with a stylish background image and social media links in the footer.
 
 Files
--'login.html': TheLogin HTML file.
+-`login.html`: TheLogin HTML file.
 -'index.html': The main HTML file.
 -'home.html': The Home page HTML file.
 -'about.html': The About Us page HTML file.
