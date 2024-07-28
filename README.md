@@ -3,7 +3,7 @@ This repository contains the source code for the "Epic Events: Crafting Unforget
 
 Files
 -`login.html`: TheLogin HTML file.
--`index.html`: The main HTML file.
+- `index.html`: The main HTML file.
 -`home.html`: The Home page HTML file.
 -`about.html`: The About Us page HTML file.
 -`events.html`: The Events page HTML file.
